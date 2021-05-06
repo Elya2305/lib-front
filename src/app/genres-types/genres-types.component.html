@@ -1,0 +1,68 @@
+<p>
+  <button class="btn btn-outline-primary mt-2" type="button" data-toggle="modal" data-target="#editOrDelete"
+          (click)="clearTarget()">
+    New
+  </button>
+</p>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+  <div class="col" *ngFor="let classType of classifications">
+    <div class="card mb-3">
+      <div class="card-body" data-toggle="modal" data-target="#editOrDelete" (click)="targetEdit(classType)">
+        <div class="d-flex flex-row">
+          <span class="material-icons mr-2">{{classType.icon ? classType.icon : getDefaultIcon()}}</span>
+          <h5>{{classType.title}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editOrDelete" tabindex="-1" role="dialog" aria-labelledby="editOrDelete"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{target ? 'Editing' : 'Creating'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form autocomplete="off" [formGroup]="form">
+          <div class="form-group row">
+            <label for="editTitle" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+              <input type="text" id="editTitle" class="form-control" formControlName="title"
+                     [value]="target ? target.title : ''">
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <h5>Choose icon</h5>
+            <span class="material-icons mx-1" (click)="choose('help_outline')"
+                  [class.chosen]="icon === 'help_outline'">help_outline</span>
+            <span class="material-icons mx-1" (click)="choose('favorite_border')"
+                  [class.chosen]="icon === 'favorite_border'">favorite_border</span>
+            <span class="material-icons mx-1" (click)="choose('emoji_emotions')"
+                  [class.chosen]="icon === 'emoji_emotions'">emoji_emotions</span>
+            <span class="material-icons mx-1" (click)="choose('sports_kabaddi')"
+                  [class.chosen]="icon === 'sports_kabaddi'">sports_kabaddi</span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" data-dismiss="modal" (click)="deleteClassType()">
+          Delete
+        </button>
+        <button class="btn btn-primary" type="button" data-dismiss="modal"
+                (click)="target ? editClassType() : createClassType()" [disabled]="form.invalid">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

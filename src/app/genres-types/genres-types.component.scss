@@ -1,0 +1,23 @@
+.card:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+form {
+  width: 300px;
+}
+.heart {
+  content: '<span class="material-icons">favorite_border</span>';
+}
+
+.material-icons {
+  font-size: 25px;
+}
+
+.edit-form {
+  max-width: 100px;
+}
+
+.chosen {
+  color: rgba(208, 207, 77, 0.92);
+}

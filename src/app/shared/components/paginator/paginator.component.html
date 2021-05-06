@@ -1,0 +1,24 @@
+<div class="paginator">
+  <ul class="pagination">
+    <li class="page-item"
+        [class.disabled]="startPage()">
+      <a class="page-link"
+         (click)="previousPage()"
+      >&laquo;</a>
+    </li>
+
+    <li *ngFor="let page of pages()"
+        (click)="getPage(page)"
+        [class.active]="getCurrentPage(page)"
+        class="page-item">
+      <a class="page-link">{{page}}</a>
+    </li>
+
+    <li class="page-item"
+        [class.disabled]="endPage()">
+      <a class="page-link"
+         (click)="nextPage()"
+      >&raquo;</a>
+    </li>
+  </ul>
+</div>

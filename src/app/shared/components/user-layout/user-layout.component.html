@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">E-Book</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/books']">My library</a>
+      </li>
+
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/search']">Search book</a>
+      </li>
+
+      <li class="nav-item dropdown" routerLinkActive="active">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false">Book classifications</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" [routerLink]="['/classifier']" [queryParams]="{class: 'genres'}">Genres</a>
+          <a class="dropdown-item" [routerLink]="['/classifier']" [queryParams]="{class: 'types'}">Categories</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<app-alert></app-alert>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

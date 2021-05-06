@@ -1,0 +1,39 @@
+<div class="input-group my-3">
+  <span class="input-group-text" id="search">Search</span>
+  <input type="text" class="form-control" aria-describedby="search" (keyup)="onSearch($event)">
+</div>
+
+<div *ngIf="books && books.length; else searchBooks">
+  <div *ngFor="let book of books" class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="book.imageLink" alt="No picture" width="128" height="180">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">{{book.title}}</h5>
+            <span class="material-icons" (click)="saveBook(book)">bookmark_add</span>
+          </div>
+          <h6 class="card-subtitle mb-2 text-muted">{{book.authors | formatArray}}</h6>
+          <p class="card-text" [innerHTML]="book.shortDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-paginator [totalPages]="totalPages"
+                 [pageSize]="pageSize"
+                 [page]="page" (onChangePage)="onChangePage($event)">
+  </app-paginator>
+</div>
+
+<ng-template #searchBooks>
+  <h3>
+    <small class="text-muted">Start searching</small>
+  </h3>
+</ng-template>
+
+
+
+

@@ -1,0 +1,79 @@
+<div class="input-group my-3">
+  <span class="input-group-text" id="search">Search</span>
+  <input type="text" class="form-control" placeholder="By title, author, genre, label or category"
+         aria-describedby="search"
+         (keyup)="onSearch($event)">
+</div>
+<hr>
+<div *ngIf="books && books.length; else emptyLib">
+  <div *ngFor="let book of books" class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-3">
+        <img
+          [src]="book.imageLink ? book.imageLink : randomCover()"
+          alt="No picture" width="128" height="180">
+      </div>
+      <div class="col-md-9">
+        <div class="d-flex justify-content-end">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div class="row card-title">
+                <h5 [innerHTML]="book.title | mark:search"></h5>
+                <span class="material-icons ml-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                      [title]="classification.title"
+                      *ngFor="let classification of getGenres(book)">{{classification.icon ? classification.icon : defaultIcon()}}</span>
+              </div>
+
+              <div class="btn-group">
+                <a [routerLink]="['/view', book.id]">
+                  <span class="material-icons launch">launch</span>
+                </a>
+                <span class="material-icons cross"
+                      data-toggle="modal" data-target="#deleteConfirm"
+                      (click)="setBookForDeleting(book)"
+                >clear</span>
+              </div>
+            </div>
+            <h6 class="card-subtitle text-muted" [innerHTML]="book.authors | formatArray | mark:search"></h6>
+
+          </div>
+          <div class="badges">
+          <span class="badge mx-1" [class]="'badge-' + label.color"
+                *ngFor="let label of book.labels" [innerHTML]="label.title | mark:search"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-paginator [totalPages]="totalPages"
+                 [pageSize]="pageSize"
+                 [page]="page" (onChangePage)="onChangePage($event)">
+  </app-paginator>
+</div>
+
+
+<!-- Modal confirm deleting -->
+<div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="deleteConfirm" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <h5 *ngIf="bookToDelete">
+            Are you sure you want to delete a book '{{bookToDelete.title}}'?
+          </h5>
+        </div>
+        <div class="d-flex justify-content-end mx-2">
+          <button type="button" class="btn btn-danger mx-1" data-dismiss="modal" (click)="deleteBook()">Yes</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="unsetBookToDelete()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyLib>
+  <h3>
+    <small class="text-muted">You have no books yet</small>
+  </h3>
+</ng-template>

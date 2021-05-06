@@ -1,0 +1,11 @@
+<div class="alert-wrap">
+  <div class="alert alert-dismissible" *ngIf="text" [ngClass]="{
+    'alert-info': type === 'success',
+    'alert-warning': type === 'warning',
+    'alert-danger': type === 'danger'
+    }
+">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{text}}
+  </div>
+</div>
